@@ -31,6 +31,8 @@ For download project is simple
 ```
 
 and ready, you download the system, for compile you will need of a IDE.
+for save the data, will for Controllers folder and edit all name in **YOUR_DIRECTORY_FILE**
+for your directory.
 
 Thank you so much for read.
 
