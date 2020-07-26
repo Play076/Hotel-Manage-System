@@ -24,7 +24,7 @@ For download project is simple
 
 ``` bash 
 
-    $ git clone https://github.com/Valdemirjr7/Hotel-Manage-System
+    $ git clone https://github.com/Valdemirjr7/Hotel-Manage-System.git
 
     $ cd Hotel-Manage-System
 
