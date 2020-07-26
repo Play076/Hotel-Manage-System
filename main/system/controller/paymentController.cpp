@@ -36,7 +36,7 @@ int PaymentController::PaymentHotelMethod(Payment *payment, string clientNickane
         vector<string> vectorEmail;
         
 
-        fileClient.open("C:/Users/user/Documents/hotelsystem/database/clientdb.txt", ios::in|ios::app);
+        fileClient.open("YOUR_DIRECTORY_FILE/database/clientdb.txt", ios::in|ios::app);
 
         if(fileClient.is_open())
         {

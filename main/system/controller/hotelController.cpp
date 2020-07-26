@@ -65,11 +65,13 @@ int HotelController::removeHosting(int numberhost)
 
         fileHost.close();
 
+        remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
+
         for(int i = 0; i < countHost; i++)
         {
             if(vectorHotelNumber[i] == numberhost)
             {
-                tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdbtmp.txt", ios::out|ios::app);
+                tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
 
                 if(tmpFileHost.is_open())
                 {  
@@ -86,12 +88,6 @@ int HotelController::removeHosting(int numberhost)
                 tmpFileHost.close();
                 break;
             }
-        }
-
-        if(returnValueControllerHotel)
-        {
-            remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
-            rename("YOUR_DIRECTORY_FILE/database/hostdbtmp.txt", "YOUR_DIRECTORY_FILE/database/hostdb.txt");
         }
     }
     catch(const std::exception& ex)
@@ -207,13 +203,13 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
             cout << "\n\t\t\tThe client: " << clientnickname << endl;
             cout << "\n\t\t\tHost number: " << numberhost << endl;
             cout << "\n\t\t\tHosting in: [" << tmpDataHosting << "]\n" << endl;
+            returnValueControllerHotel = true;
         }else
         {
             system("COLOR 06");
             cout << "\n\t\t\tNot was find nothing..\n\t\t\t" << endl;
+            returnValueControllerHotel = false;
         }
-        
-        returnValueControllerHotel = true;
     }
     catch(const std::exception& ex)
     {
