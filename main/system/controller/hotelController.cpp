@@ -81,8 +81,6 @@ int HotelController::removeHosting(int numberhost)
                     returnValueControllerHotel = true;
                     break;
                 }
-
-                break;
             }else
             {
                 system("COLOR 06");
