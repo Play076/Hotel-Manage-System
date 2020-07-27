@@ -26,7 +26,7 @@ void paymethod(const char *titile);
 
 int main()
 {
-    system("TITLE Hotel Manage System - Credits: Valdemir Valence Jr - Full Stack Developer: github.com/valdemirjr7");
+    system("TITLE Hotel Manage System - Credits: Valdemir Valenca Jr - Full Stack Developer: github.com/valdemirjr7");
 
     system("CLS");
     system("COLOR 02");
