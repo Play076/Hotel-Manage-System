@@ -67,28 +67,31 @@ int HotelController::removeHosting(int numberhost)
 
         remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
 
+        tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
+
         for(int i = 0; i < countHost; i++)
         {
-            if(vectorHotelNumber[i] == numberhost)
-            {
-                tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
+            if(tmpFileHost.is_open())
+            { 
+                tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << vectorIdClient[i] << " " << vectorKeyHost[i] << " " << vectorDataHosting[i] << endl;
 
-                if(tmpFileHost.is_open())
-                {  
+                if(vectorHotelNumber[i] == numberhost)
+                {
                     tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << "0" << " " << "0" << " " << "00/00/0000" << endl;
                     returnValueControllerHotel = true;
                     break;
-                }else
-                {
-                    system("COLOR 06");
-                    cout << "\n\t\t\tError the file don't was found...";
-                    returnValueControllerHotel = false;
                 }
 
-                tmpFileHost.close();
                 break;
+            }else
+            {
+                system("COLOR 06");
+                cout << "\n\t\t\tError the file don't was found...";
+                returnValueControllerHotel = false;
             }
         }
+
+        tmpFileHost.close();
     }
     catch(const std::exception& ex)
     {

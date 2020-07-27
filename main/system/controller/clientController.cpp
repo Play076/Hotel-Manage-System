@@ -21,7 +21,7 @@ int ClientController::registerClient(Client newclient)
 
     try
     {
-        clientHost.open("C:/Users/user/Documents/hotelsystem/database/clientdb.txt", ios::out|ios::app);
+        clientHost.open("YOUR_DIRECTORY_FILE/database/clientdb.txt", ios::out|ios::app);
 
         if(clientHost.is_open())
         {
