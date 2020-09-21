@@ -1,15 +1,4 @@
-#include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <exception>
-#include <vector>
-#include <fstream>
 #include "main/system/router.cpp"
-
-using namespace std;
-
-vector<int> numberInformation;
-vector<string> stringInformation;
 
 bool verificationValue;
 int optionMenu;
@@ -26,7 +15,7 @@ void paymethod(const char *titile);
 
 int main()
 {
-    system("TITLE Hotel Manage System - Credits: Valdemir Valenca Jr - Full Stack Developer: github.com/valdemirjr7");
+    system("TITLE Hotel Manage System - Credits: Valdemir Valenca Jr - Engineer and Developer: github.com/valdemirjr7");
 
     system("CLS");
     system("COLOR 02");
@@ -42,7 +31,7 @@ void menu()
 
     cout << "\n\n\t\t\t/===================================\\" << endl;
     cout << "\t\t\t|Welcome to hotel manage system     |" << endl;
-    cout <<"\t\t\t||ESC| for exit                     |" << endl;
+    cout << "\t\t\t||ESC| for exit                     |" << endl;
     cout << "\t\t\t|===================================|" << endl;
     cout << "\t\t\t||C| Create new Hotel               |" << endl;
     cout << "\t\t\t||L| List all Hotel                 |" << endl;

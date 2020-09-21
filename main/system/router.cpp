@@ -1,14 +1,10 @@
-#include <iostream>
 #include <exception>
 #include <conio.h>
 #include <fstream>
-#include <vector>
 #include "controller/hotelController.cpp"
 #include "controller/clientController.cpp"
 #include "controller/paymentController.cpp"
 #include "controller/AuthController.cpp"
-
-using namespace std;
 
 bool returnValueRouter;
 

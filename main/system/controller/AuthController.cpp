@@ -1,9 +1,5 @@
-#include <iostream>
 #include <fstream>
 #include <exception>
-#include <vector>
-
-using namespace std;
 
 bool authorization = false;
 static bool authorizationSession = false;
@@ -24,11 +20,7 @@ int Authentication::LoginAuth(string adminUser, string adminPswd)
         string tmpUser;
         string tmpPswd;
 
-        vector<string> vectorUserAdmin;
-        vector<string> vectorPswdAdmin;
-
-
-        fileAuth.open("YOUR_DIRECTORY_FILE/database/authentication.txt", ios::in|ios::app);
+        fileAuth.open("C:/Users/user/Documents/hotelsystem/database/authentication.txt", ios::in|ios::app);
 
         if(fileAuth.is_open())
         {

@@ -1,7 +1,5 @@
-#include <iostream>
 #include <exception>
 #include <fstream>
-#include <vector>
 #include "../../obj/pay-obj.cpp"
 
 using namespace std;
@@ -28,13 +26,6 @@ int PaymentController::PaymentHotelMethod(Payment *payment, string clientNickane
         string clientNickname;
         string clientContact;
         string clientEmail;
-
-        vector<string> vectorIdClient;
-        vector<string> vectorClientName;
-        vector<string> vectorClientNickname;
-        vector<string> vectorContact;
-        vector<string> vectorEmail;
-        
 
         fileClient.open("YOUR_DIRECTORY_FILE/database/clientdb.txt", ios::in|ios::app);
 
@@ -70,7 +61,7 @@ int PaymentController::PaymentHotelMethod(Payment *payment, string clientNickane
                 cout << "\t\t\tName: " << vectorClientName[i] << endl;
                 cout << "\t\t\tNickName: " << vectorClientNickname[i] << endl;
                 cout << "\t\t\tContact: " << vectorContact[i] << endl;
-                cout << "\t\t\tEmail: " << vectorContact[i] << endl;
+                cout << "\t\t\tEmail: " << vectorEmail[i] << endl;
                 cout << "\t\t\t==========================================" << endl;
                 cout << "\t\t\tPrice Total: $" << payment->getPrice() << endl;
                 cout << "\t\t\tPayment Method: " << payment->getMethodPayment() << endl;

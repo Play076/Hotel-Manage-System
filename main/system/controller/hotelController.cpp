@@ -5,10 +5,23 @@
 #include <vector>
 #include "../../obj/hosting.cpp"
 #include "../../utils/hexaid.cpp"
-
-using namespace std;
+#include "../../utils/vectors.cpp"
 
 bool returnValueControllerHotel;
+
+int tmpNumberHost;
+int tmpNumberFloor;
+    
+string tmpIdClient;
+string tmpKeyHost;
+string tmpIdKeyHost;
+string tmpClientNickname;
+string tmpDataHosting;
+
+fstream fileClient;
+fstream fileHost;
+fstream tmpFileClient;
+fstream tmpFileHost;
 
 class HotelController
 {
@@ -22,73 +35,57 @@ public:
 
 int HotelController::removeHosting(int numberhost)
 {
+    int countHost = 0;
     try
     {
-        fstream fileHost;
-        fstream tmpFileHost;
-
-        int countHost;
-
-        int tmpNumberHost;
-        int tmpNumberFloor;
-        string tmpKeyHost;
-        string tmpIdClient;
-        string tmpDataHosting;
-
-        vector<int> vectorHotelNumber;
-        vector<string> vectorKeyHost;
-        vector<string> vectorIdClient;
-        vector<string> vectorDataHosting;
-        vector<int> vectorFloorHosting;
-
         fileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
 
         if(fileHost.is_open())
-        {  
-            while (!fileHost.eof()) 
+        {
+            while (!fileHost.eof())
             {
-                fileHost >> tmpNumberHost >> tmpNumberFloor >> tmpIdClient >> tmpKeyHost >> tmpDataHosting;
+                fileHost >> tmpNumberHost >> tmpNumberFloor >> tmpIdClient >> tmpIdKeyHost >> tmpDataHosting;
                 vectorHotelNumber.push_back(tmpNumberHost);
                 vectorFloorHosting.push_back(tmpNumberFloor);
                 vectorIdClient.push_back(tmpIdClient);
-                vectorKeyHost.push_back(tmpKeyHost);
+                vectorIdkeyHost.push_back(tmpIdKeyHost);
                 vectorDataHosting.push_back(tmpDataHosting);
                 countHost++;
             }
-            
+        }else
+        {
+            system("COLOR 06");
+            cout << "\n\t\t\tError the file don't was found...\n\t\t\t";
+            returnValueControllerHotel = false;
+        }
+
+        fileHost.close();
+
+        countHost--;
+
+        remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
+
+        tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
+
+        if(tmpFileHost.is_open())
+        {
+            for(int i = 0; i < countHost; i++)
+            {
+                if(vectorHotelNumber[i] == numberhost)
+                {
+                    tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << "0" << " " << "0" << " " << "00/00/0000" << endl;
+                    returnValueControllerHotel = true;
+                }else
+                {
+                    tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << vectorIdClient[i] << " " << vectorIdkeyHost[i] << " " << vectorDataHosting[i] << endl;
+                }
+            }
         }else
         {
             system("COLOR 06");
             cout << "\n\t\t\tError the file don't was found...";
             returnValueControllerHotel = false;
         }
-
-        fileHost.close();
-
-        remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
-
-        tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
-
-        for(int i = 0; i < countHost; i++)
-        {
-            if(tmpFileHost.is_open())
-            { 
-                tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << vectorIdClient[i] << " " << vectorKeyHost[i] << " " << vectorDataHosting[i] << endl;
-
-                if(vectorHotelNumber[i] == numberhost)
-                {
-                    tmpFileHost << " " << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << "0" << " " << "0" << " " << "00/00/0000" << endl;
-                    returnValueControllerHotel = true;
-                    break;
-                }
-            }else
-            {
-                system("COLOR 06");
-                cout << "\n\t\t\tError the file don't was found...";
-                returnValueControllerHotel = false;
-            }
-        }
-
         tmpFileHost.close();
     }
     catch(const std::exception& ex)
@@ -107,11 +104,6 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
 {
     try
     {
-        fstream fileHost;
-        fstream tmpFileHost;
-        fstream fileClient;
-        fstream tmpFileClient;
-
         bool clientFind = false;
 
         int countHost;
@@ -119,21 +111,10 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
 
         int tmpNumberHost;
         int tmpNumberFloor;
-        string tmpKeyHost;
-        string tmpIdClient;
-        string tmpClientNickname;
-        string tmpDataHosting;
 
         string clientName;
         string clientContact;
         string clientEmail;
-
-        vector<int> vectorHotelNumber;
-        vector<string> vectorKeyHost;
-        vector<string> vectorIdClient;
-        vector<string> vectorclientnickname;
-        vector<string> vectorclientId;
-        vector<string> vectorDataHosting;
 
         fileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
 
@@ -144,7 +125,7 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
                 fileHost >> tmpNumberHost >> tmpNumberFloor >> tmpIdClient >> tmpKeyHost >> tmpDataHosting;
                 vectorHotelNumber.push_back(tmpNumberHost);
                 vectorIdClient.push_back(tmpIdClient);
-                vectorKeyHost.push_back(tmpKeyHost);
+                vectorIdkeyHost.push_back(tmpKeyHost);
                 vectorDataHosting.push_back(tmpDataHosting);
                 countHost++;
             }
@@ -166,8 +147,8 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
             {
                 fileClient >> tmpIdClient >> clientName >> tmpClientNickname >> clientContact >> clientEmail;
 
-                vectorclientId.push_back(tmpIdClient);
-                vectorclientnickname.push_back(tmpClientNickname);
+                vectorClientId.push_back(tmpIdClient);
+                vectorClientNickname.push_back(tmpClientNickname);
             }
             
         }else
@@ -181,16 +162,16 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
 
         for(int i = 0; i < countClient; i++)
         {
-            if(vectorclientnickname[i] == clientnickname)
+            if(vectorClientNickname[i] == clientnickname)
             {
-                tmpIdClient = vectorclientId[i];
+                tmpIdClient = vectorClientId[i];
                 break;
             }
         }
 
         for(int i = 0; i < countHost; i++)
         {
-            if(vectorHotelNumber[i] == numberhost)
+            if(vectorHotelNumber[i] == numberhost && vectorIdkeyHost[i] != "0")
             {
                 tmpDataHosting = vectorDataHosting[i];
                 clientFind = true;
@@ -226,21 +207,11 @@ int HotelController::finishHostandPay(int numberhost, string clientnickname)
 
 int HotelController::hostingClinet(int numberhost, string clientnickname, string dataHosting)
 {
-    fstream fileClient;
-    fstream filetmp_host;
-    fstream filehost;
-
-    int tmpNumberHost;
-    int tmpNumberFloor;
     int countHost = 0;
     int countClient = 0;
 
     bool ownerClient=false;
     bool checkbusy=true;
-
-    string tmpIdClient;
-    string tmpIdKeyHost;
-    string tmpDataHosting;
 
     string currentIdClient;
     string clientId;
@@ -251,26 +222,18 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
 
     string newKeyHosting;
 
-    vector<int> vectorNumberHost;
-    vector<int> vectorNumberFloor;
-    vector<string> vectorIdHost;
-    vector<string> vectorIdkeyHost;
-    vector<string> vectorDataHosting;
-    vector<string> vectorClientId;
-    vector<string> vectorClientNickname;
-
     try
     {
-        filehost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
+        fileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
 
-        if(filehost.is_open())
+        if(fileHost.is_open())
         {
-            while (!filehost.eof())
+            while (!fileHost.eof())
             {
-                filehost >> tmpNumberHost >> tmpNumberFloor >> tmpIdClient >> tmpIdKeyHost >> tmpDataHosting;
+                fileHost >> tmpNumberHost >> tmpNumberFloor >> tmpIdClient >> tmpIdKeyHost >> tmpDataHosting;
 
-                vectorNumberHost.push_back(tmpNumberHost);
-                vectorNumberFloor.push_back(tmpNumberFloor);
+                vectorHotelNumber.push_back(tmpNumberHost);
+                vectorFloorHosting.push_back(tmpNumberFloor);
                 vectorIdHost.push_back(tmpIdClient);
                 vectorIdkeyHost.push_back(tmpIdKeyHost);
                 vectorDataHosting.push_back(tmpDataHosting);
@@ -283,7 +246,7 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
             returnValueControllerHotel = false;
         }
 
-        filehost.close();
+        fileHost.close();
 
         fileClient.open("YOUR_DIRECTORY_FILE/database/clientdb.txt", ios::in|ios::app);
 
@@ -308,11 +271,11 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
 
         for(int i = 0; i < countHost; i++)
         {
-            if(vectorNumberHost[i] == numberhost)
+            if(vectorHotelNumber[i] == numberhost)
             {
                 if(vectorIdHost[i] == "0")
                 {
-                    tmpNumberFloor = vectorNumberFloor[i];
+                    tmpNumberFloor = vectorFloorHosting[i];
                     system("COLOR 03");
                     cout << "\n\t\t\tThe hotel with number: " << numberhost << " are free, ready for new client\n" << endl; 
                     checkbusy = false;
@@ -331,7 +294,7 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
             }
         }
         
-        countHost = -1;
+        countHost--;
 
         if(checkbusy)
         {
@@ -339,41 +302,48 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
             vectorClientNickname.clear();
             vectorIdHost.clear();
             vectorIdkeyHost.clear();
-            vectorNumberFloor.clear();
-            vectorNumberHost.clear();
+            vectorFloorHosting.clear();
+            vectorHotelNumber.clear();
             system("COLOR 03");
             cout << "\n\t\t\tThe hotel with number: " << numberhost <<" are Busy\n" << endl;
             returnValueControllerHotel = true;
         }else
         {
-            filetmp_host.open("YOUR_DIRECTORY_FILE/database/hostdbtmp.txt", ios::out|ios::app);
-            
+            remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
+
+            tmpFileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);
+
             newKeyHosting = generateUniqueHexaId();
 
             Hosting *hosting = new Hosting(numberhost, tmpNumberFloor, clientId, newKeyHosting, dataHosting);
             
-            if(filetmp_host.is_open())
+            if(tmpFileHost.is_open())
             {
                 for(int i = 0; i < countHost; i++)
                 {
-                    filetmp_host << vectorNumberHost[i] << " " << vectorNumberFloor[i] << " " << vectorIdHost[i] << " " << vectorIdkeyHost[i] << endl;
+                    if (vectorHotelNumber[i] == hosting->getNumberHosting())
+                    {
+                        tmpFileHost << hosting->getNumberHosting() << " "  << hosting->getFloorHosting() << " " << hosting->getIdClient() << " " << hosting->getKeyHosting() << " " << hosting->getDataHosting() << endl;
+                    }else
+                    {
+                        tmpFileHost << vectorHotelNumber[i] << " " << vectorFloorHosting[i] << " " << vectorIdHost[i] << " " << vectorIdkeyHost[i] << " " << vectorDataHosting[i] << endl;
+                    } 
                 }
-                
-                filetmp_host << hosting->getNumberHosting() << " "  << hosting->getFloorHosting() << " " << hosting->getIdClient() << " " << hosting->getKeyHosting() << " " << hosting->getDataHosting() << endl;
+            }else
+            {
+                system("COLOR 06");
+                cout << "\n\t\t\tError the file don't was found...\n\t\t\t";
+                returnValueControllerHotel = false;
             }
-
-            filetmp_host.close();
+            tmpFileHost.close();
         }
-
-        remove("YOUR_DIRECTORY_FILE/database/hostdb.txt");
-        rename("YOUR_DIRECTORY_FILE/database/hostdbtmp.txt", "YOUR_DIRECTORY_FILE/database/hostdb.txt");
 
         vectorClientId.clear();
         vectorClientNickname.clear();
         vectorIdHost.clear();
         vectorIdkeyHost.clear();
-        vectorNumberFloor.clear();
-        vectorNumberHost.clear();
+        vectorFloorHosting.clear();
+        vectorHotelNumber.clear();
 
         system("COLOR 02");
         cout << "\n\t\t\tThe client: " << clientNickname << ", are registed now in host number: " << numberhost << ", the key is: " << newKeyHosting << ", an floor: " << tmpNumberFloor << endl;
@@ -394,8 +364,6 @@ int HotelController::hostingClinet(int numberhost, string clientnickname, string
 
 int HotelController::indexHost()
 {
-    fstream filehost;
-
     int getHostNumber = 0;
     int getHostFlooor = 0;
     int count = 0;
@@ -403,34 +371,28 @@ int HotelController::indexHost()
     string idKeyAcess;
     string dataHosting;
 
-    vector<int> vectorNumberHost;
-    vector<int> vectorNumberFloor;
-    vector<string> vectorIdClient;
-    vector<string> vectorIdkey;
-    vector<string> vectorData;
-
     try
     {
-        filehost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
+        fileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::in|ios::app);
 
-        if(filehost.is_open())
+        if(fileHost.is_open())
         {
-            while(!filehost.eof())
+            while(!fileHost.eof())
             {
-                filehost >> getHostNumber >> getHostFlooor >> idClientekey >> idKeyAcess >> dataHosting;
-                vectorNumberHost.push_back(getHostNumber);
-                vectorNumberFloor.push_back(getHostFlooor);
+                fileHost >> getHostNumber >> getHostFlooor >> idClientekey >> idKeyAcess >> dataHosting;
+                vectorHotelNumber.push_back(getHostNumber);
+                vectorFloorHosting.push_back(getHostFlooor);
                 vectorIdClient.push_back(idClientekey);
-                vectorIdkey.push_back(idKeyAcess);
-                vectorData.push_back(dataHosting);
+                vectorIdkeyHost.push_back(idKeyAcess);
+                vectorDataHosting.push_back(dataHosting);
                 count++;
             }
-
+            count--;
             for(int i = 0; i < count; i++)
             {
-                cout << "\n\t\t\tHost Number: " << vectorNumberHost[i] << endl;
-                cout << "\t\t\tHost Floor: " << vectorNumberFloor[i] << endl;
-                if(vectorIdClient[i] == "0")
+                cout << "\n\t\t\tHost Number: " << vectorHotelNumber[i] << endl;
+                cout << "\t\t\tHost Floor: " << vectorFloorHosting[i] << endl;
+                if(vectorIdClient[i] == "0" || vectorIdClient[i] == " ")
                 {
                     cout << "\t\t\tStatus: Free\n" << endl;
                 }else
@@ -440,11 +402,11 @@ int HotelController::indexHost()
                 
             }
 
-            vectorNumberHost.clear();
-            vectorNumberFloor.clear();
+            vectorHotelNumber.clear();
+            vectorFloorHosting.clear();
             vectorIdClient.clear();
-            vectorIdkey.clear();
-            vectorData.clear();
+            vectorIdkeyHost.clear();
+            vectorDataHosting.clear();
 
             returnValueControllerHotel = true;
         }else
@@ -454,7 +416,7 @@ int HotelController::indexHost()
             returnValueControllerHotel = false;
         };
 
-        filehost.close();
+        fileHost.close();
     }catch(const exception& ex)
     {
         system("COLOR 04");
@@ -471,13 +433,11 @@ int HotelController::createNewHost(Hosting createHost)
 {
     try
     {
-        fstream filehost;
+        fileHost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);   
 
-        filehost.open("YOUR_DIRECTORY_FILE/database/hostdb.txt", ios::out|ios::app);   
-
-        if(filehost.is_open())
+        if(fileHost.is_open())
         {
-            filehost << createHost.getNumberHosting() << " " << createHost.getFloorHosting() << " " << createHost.getIdClient() << " " << createHost.getKeyHosting() << " " << createHost.getDataHosting() << endl;
+            fileHost << createHost.getNumberHosting() << " " << createHost.getFloorHosting() << " " << createHost.getIdClient() << " " << createHost.getKeyHosting() << " " << createHost.getDataHosting() << endl;
 
             cout << "\n\t\t\tNew hosting with number: " << createHost.getNumberHosting() << " was created with success\n" << endl;
 
@@ -489,7 +449,7 @@ int HotelController::createNewHost(Hosting createHost)
             returnValueControllerHotel = false;
         };
 
-        filehost.close();
+        fileHost.close();
     }
     catch(const exception& ex)
     {
@@ -499,7 +459,6 @@ int HotelController::createNewHost(Hosting createHost)
 
         returnValueControllerHotel = false;
     }
-    
 
     return returnValueControllerHotel;
 };
