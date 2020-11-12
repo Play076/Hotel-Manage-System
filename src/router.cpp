@@ -24,6 +24,7 @@ public:
     int hostingClientCheckPay(int numberhost, string clientnickname);
     int PaymentClient(double priceValue, string method, string clientNickanemPay);
     int removeHostingHotel(int numberhost);
+    int findRegistedClient(string clientNickname);
 };
 
 int Router::authenticationMethod(string adminName, string adminPswd)
@@ -132,6 +133,21 @@ int Router::removeHostingHotel(int numberhost)
         system("COLOR 01");
 
         returnValueRouter = hotelController->removeHosting(numberhost);
+
+        return returnValueRouter;
+    }else
+    {
+        return false;
+    }
+};
+
+int Router::findRegistedClient(string clientNickname)
+{
+    if(authentication->Auth())
+    {
+        system("COLOR 01");
+
+        returnValueRouter = clientController->findRegistedClient(clientNickname);
 
         return returnValueRouter;
     }else

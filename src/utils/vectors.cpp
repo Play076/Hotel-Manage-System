@@ -16,8 +16,8 @@ vector<string> vectorIdClient;
 vector<string> vectorClientName;
 vector<string> vectorClientNickname;
 vector<string> vectorClientId;
-vector<string> vectorContact;
-vector<string> vectorEmail;
+vector<string> vectorClientPhoneContact;
+vector<string> vectorClientEmail;
 
 vector<string> vectorUserAdmin;
 vector<string> vectorPswdAdmin;

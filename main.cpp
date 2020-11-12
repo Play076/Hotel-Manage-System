@@ -1,4 +1,4 @@
-#include "main/system/router.cpp"
+#include "src/router.cpp"
 
 bool verificationValue;
 int optionMenu;
@@ -12,6 +12,7 @@ void getAllListHosting(const char *title);
 void registerClient(const char *title);
 void hostingClient(const char *title);
 void paymethod(const char *titile);
+void findRegistedClient(const char *title);
 
 int main()
 {
@@ -36,6 +37,7 @@ void menu()
     cout << "\t\t\t||C| Create new Hotel               |" << endl;
     cout << "\t\t\t||L| List all Hotel                 |" << endl;
     cout << "\t\t\t||R| Register new client            |" << endl;
+    cout << "\t\t\t||K| Find for registed clients      |" << endl;
     cout << "\t\t\t||H| Register client in new hotel   |" << endl;
     cout << "\t\t\t||P| Finish hotel and pay           |" << endl;
     cout << "\t\t\t\\===================================/" << endl;
@@ -58,6 +60,11 @@ void menu()
     case 104:
         system("CLS");
         hostingClient("\n\t\t\tRegiste client in new host");
+        break;
+    case 107:
+        system("CLS");
+        findRegistedClient("\n\t\tFind a registed client");
+        break;
     case 112:
         system("CLS");
         paymethod("\n\t\t\tCheckout to payment of hosting");
@@ -98,9 +105,9 @@ void authenticationSystem(const char *title)
         system("COLOR 06");
         cout << "\n\t\t\tHave a error for authentication...\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        system("COLOR 02");
-        exit(0);
+        menu();
     }
 };
 
@@ -134,8 +141,9 @@ void createNewHosting(const char *title)
         system("COLOR 06");
         cout << "\n\t\t\tHave a error for create new Host...\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        exit(0);
+        menu();
     }
 };
 
@@ -156,8 +164,9 @@ void getAllListHosting(const char *title)
         system("COLOR 06");
         cout << "\n\t\t\tHave a error for list all Host...\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        exit(0);
+        menu();
     }
 };
 
@@ -200,8 +209,9 @@ void registerClient(const char *title)
         system("COLOR 06");
         cout << "\n\t\t\tthere was some error to register a new client\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        exit(0);
+        menu();
     }
 }
 
@@ -233,8 +243,9 @@ void hostingClient(const char *title)
         system("COLOR 06");
         cout << "\n\t\t\tHave a error for Hosting a Client...\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        exit(0);
+        menu();
     }
 }
 
@@ -293,24 +304,55 @@ void paymethod(const char *titile)
                 system("COLOR 06");
                 cout << "\n\t\t\tHave a error for Payment a Client Process...\n\t\t\t" << endl;
                 system("PAUSE");
+                system("CLS");
                 system("COLOR 02");
-                exit(0);
+                menu();
             }
         }else
         {
             system("COLOR 06");
             cout << "\n\t\t\tHave a error for Payment a Client Process...\n\t\t\t" << endl;
             system("PAUSE");
+            system("CLS");
             system("COLOR 02");
-            exit(0);
+            menu();
         }
     }else
     {
         system("COLOR 06");
         cout << "\n\t\t\tHave a error for Payment a Client...\n\t\t\t" << endl;
         system("PAUSE");
+        system("CLS");
         system("COLOR 02");
-        exit(0);
+        menu(); 
     }
     
+}
+
+void findRegistedClient(const char *title)
+{
+    cout << title << endl;
+
+    string clientnickname;
+
+    cout << "\n\t\tEnter with client nickname\t\t" << endl;
+    cin >> clientnickname;
+
+    verificationValue = router->findRegistedClient(clientnickname);
+
+    if(verificationValue)
+    {
+        system("PAUSE");
+        system("CLS");
+        system("COLOR 02");
+        menu();
+    }else
+    {
+        system("COLOR 06");
+        cout << "\n\t\t\tHave a error for find a Client...\n\t\t\t" << endl;
+        system("PAUSE");
+        system("CLS");
+        system("COLOR 02");
+        menu(); 
+    }
 }
